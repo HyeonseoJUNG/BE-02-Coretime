@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/message-rooms")
 @RequiredArgsConstructor
 public class MessageController {
+
   private final MessageService messageService;
 
   @ApiOperation(value = "쪽지 전송하기", notes = "쪽지를 전송하는 요청입니다.")
   @PostMapping("/{messageRoomId}/messages")
-  public ResponseEntity<ApiResponse> sendMessage(@AuthenticationPrincipal JwtPrincipal principal, @PathVariable("messageRoomId") Long messageRoomId,
+  public ResponseEntity<ApiResponse> sendMessage(@AuthenticationPrincipal JwtPrincipal principal,
+      @PathVariable("messageRoomId") Long messageRoomId,
       @Valid @RequestBody final MessageSendRequest request) {
 
     messageService.sendMessage(principal.userId, messageRoomId, request);
@@ -39,7 +41,8 @@ public class MessageController {
 
   @ApiOperation(value = "리디렉트된 쪽지 전송하기", notes = "쪽지방 생성에서 리디렉트되어 쪽지를 전송하는 요청입니다.")
   @PostMapping("/{messageRoomId}/redirect-message")
-  public ResponseEntity<ApiResponse> sendRedirectedMessage(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> sendRedirectedMessage(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @PathVariable("messageRoomId") Long messageRoomId,
       @ModelAttribute("message") String message) {
 
@@ -50,10 +53,12 @@ public class MessageController {
 
   @ApiOperation(value = "쪽지 다건 조회하기", notes = "쪽지를 다건 조회하는 요청입니다.")
   @GetMapping("/{messageRoomId}/messages")
-  public ResponseEntity<ApiResponse> getAllMessages(@AuthenticationPrincipal JwtPrincipal principal, @PathVariable("messageRoomId") Long messageRoomId,
+  public ResponseEntity<ApiResponse> getAllMessages(@AuthenticationPrincipal JwtPrincipal principal,
+      @PathVariable("messageRoomId") Long messageRoomId,
       @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) final Pageable pageable) {
 
-    Page<MessageResponse> allMessages = messageService.getAllMessages(principal.userId, messageRoomId,
+    Page<MessageResponse> allMessages = messageService.getAllMessages(principal.userId,
+        messageRoomId,
         pageable);
     return ResponseEntity.ok().body(new ApiResponse<>("쪽지 다건 조회가 완료되었습니다.", allMessages));
   }

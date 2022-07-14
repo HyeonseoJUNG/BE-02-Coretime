@@ -140,12 +140,12 @@ class FriendRepositoryTest {
     assertThat(friendPage1.getNumberOfElements(), is(2));
     assertThat(friendPage2.getNumberOfElements(), is(1));
   }
-  
+
   @Test
   @DisplayName("친구 관계 여부 확인")
   void existsFriendRelationshipTest() {
     userRepository.save(user3);
-    
+
     friendRepository.save(new Friend(user1, user2));
     friendRepository.save(new Friend(user2, user1));
     friendRepository.save(new Friend(user1, user3));

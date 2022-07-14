@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class MessageRoomIdResponse {
+
   private final Long messageRoomId;
 
   public MessageRoomIdResponse(MessageRoom messageRoom) {

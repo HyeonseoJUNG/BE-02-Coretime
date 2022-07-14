@@ -43,7 +43,8 @@ public class FriendController {
 
   @ApiOperation(value = "친구 요청 보내기", notes = "친구 요청을 보내는 요청입니다.")
   @PostMapping("/requests")
-  public ResponseEntity<ApiResponse> sendFriendRequest(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> sendFriendRequest(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @Valid @RequestBody final FriendRequestSendRequest request) {
 
     friendService.sendFriendRequest(principal.userId, request);
@@ -52,7 +53,8 @@ public class FriendController {
 
   @ApiOperation(value = "친구 요청 취소하기", notes = "보낸 친구 요청을 취소하는 요청입니다.")
   @DeleteMapping("/requests")
-  public ResponseEntity<ApiResponse> revokeFriendRequest(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> revokeFriendRequest(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @Valid @RequestBody final FriendRequestRevokeRequest request) {
 
     friendService.revokeFriendRequest(principal.userId, request);
@@ -61,7 +63,8 @@ public class FriendController {
 
   @ApiOperation(value = "친구 요청 수락하기", notes = "받은 친구 요청을 수락하는 요청입니다.")
   @PostMapping("/requests/accept")
-  public ResponseEntity<ApiResponse> acceptFriendRequest(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> acceptFriendRequest(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @Valid @RequestBody final FriendRequestAcceptRequest request) {
 
     friendService.acceptFriendRequest(principal.userId, request);
@@ -70,7 +73,8 @@ public class FriendController {
 
   @ApiOperation(value = "친구 요청 거절하기", notes = "받은 친구 요청을 거절하는 요청입니다.")
   @DeleteMapping("/requests/refuse")
-  public ResponseEntity<ApiResponse> refuseFriendRequest(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> refuseFriendRequest(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @Valid @RequestBody final FriendRequestRefuseRequest request) {
 
     friendService.refuseFriendRequest(principal.userId, request);
@@ -79,9 +83,11 @@ public class FriendController {
 
   @ApiOperation(value = "친구 요청 받은 목록 조회하기", notes = "친구 요청 받은 목록을 조회하는 요청입니다.")
   @GetMapping("/requests")
-  public ResponseEntity<ApiResponse> getAllFriendRequests(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> getAllFriendRequests(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @PageableDefault(size = 20, sort = "created_at", direction = Sort.Direction.DESC) final Pageable pageable) {
-    Page<FriendRequestInfoResponse> allFriendRequests = friendService.getAllFriendRequests(principal.userId,
+    Page<FriendRequestInfoResponse> allFriendRequests = friendService.getAllFriendRequests(
+        principal.userId,
         pageable);
     return ResponseEntity.ok()
         .body(new ApiResponse<>("친구 요청받은 목록 조회가 완료되었습니다.", allFriendRequests));

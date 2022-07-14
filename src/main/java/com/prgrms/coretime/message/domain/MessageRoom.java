@@ -60,7 +60,8 @@ public class MessageRoom extends BaseEntity {
   private List<Message> messages = new ArrayList<>();
 
   @Builder
-  public MessageRoom(User initialSender, User initialReceiver, Post createdFrom, Boolean isAnonymous) {
+  public MessageRoom(User initialSender, User initialReceiver, Post createdFrom,
+      Boolean isAnonymous) {
     Assert.notNull(initialSender, "initialSender는 null이 아니어야 합니다.");
     Assert.notNull(initialReceiver, "initialReceiver는 null이 아니어야 합니다.");
     Assert.notNull(createdFrom, "createdFrom은 null이 아니어야 합니다.");

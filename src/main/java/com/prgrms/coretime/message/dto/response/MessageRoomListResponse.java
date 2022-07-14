@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class MessageRoomListResponse {
+
   private final Long messageRoomId;
   private final Boolean isAnonymous;
   private final String interlocutorNickname;

@@ -40,7 +40,8 @@ public class MessageRoomController {
 
   @ApiOperation(value = "쪽지방 생성하기", notes = "쪽지방을 생성하는 요청입니다.")
   @PostMapping
-  public ResponseEntity<ApiResponse> createMessageRoom(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> createMessageRoom(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @Valid @RequestBody final MessageRoomCreateRequest request,
       RedirectAttributes redirectAttributes) throws URISyntaxException {
 
@@ -48,8 +49,8 @@ public class MessageRoomController {
         request.getCreatedFrom(), request.getReceiverId(), request.getIsAnonymous());
     if (maybeMessageRoomId.isPresent()) {
       URI redirectUri = new URI(
-            new StringBuilder().append("/api/v1/message-rooms/").append(maybeMessageRoomId.get())
-                .append("/redirect-message?userId=").append(principal.userId).toString()
+          new StringBuilder().append("/api/v1/message-rooms/").append(maybeMessageRoomId.get())
+              .append("/redirect-message?userId=").append(principal.userId).toString()
       );
 
       redirectAttributes.addFlashAttribute("message", request.getFirstMessage());
@@ -85,16 +86,19 @@ public class MessageRoomController {
 
   @ApiOperation(value = "쪽지방 리스트 조회하기", notes = "쪽지방 리스트를 조회하는 요청입니다.")
   @GetMapping
-  public ResponseEntity<ApiResponse> getMessageRooms(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> getMessageRooms(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @PageableDefault(size = 20, sort = "updated_at", direction = Sort.Direction.DESC) final Pageable pageable) {
 
-    Page<MessageRoomListResponse> response = messageRoomService.getMessageRooms(principal.userId, pageable);
+    Page<MessageRoomListResponse> response = messageRoomService.getMessageRooms(principal.userId,
+        pageable);
     return ResponseEntity.ok().body(new ApiResponse<>("쪽지방 리스트 조회가 완료되었습니다.", response));
   }
 
   @ApiOperation(value = "쪽지방 차단하기", notes = "쪽지방을 차단하는 요청입니다.")
   @PatchMapping("/{messageRoomId}/block")
-  public ResponseEntity<ApiResponse> blockMessageRoom(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> blockMessageRoom(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @PathVariable("messageRoomId") Long messageRoomId) {
 
     messageRoomService.blockMessageRoom(principal.userId, messageRoomId);
@@ -103,7 +107,8 @@ public class MessageRoomController {
 
   @ApiOperation(value = "쪽지방 삭제하기", notes = "쪽지방을 삭제하는 요청입니다.")
   @PatchMapping("/{messageRoomId}/delete")
-  public ResponseEntity<ApiResponse> deleteMessageRoom(@AuthenticationPrincipal JwtPrincipal principal,
+  public ResponseEntity<ApiResponse> deleteMessageRoom(
+      @AuthenticationPrincipal JwtPrincipal principal,
       @PathVariable("messageRoomId") Long messageRoomId) {
 
     messageRoomService.deleteMessageRoom(principal.userId, messageRoomId);

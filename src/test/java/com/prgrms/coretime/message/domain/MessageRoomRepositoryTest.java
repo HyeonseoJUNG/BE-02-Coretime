@@ -245,6 +245,7 @@ class MessageRoomRepositoryTest {
         user1.getId(), pageable);
 
     assertThat(messagePage.getNumberOfElements(), is(2));
-    assertThat(messagePage.getContent().get(0).getMessageRoomId().intValue(), is(savedMessageRoom2.getId().intValue()));
+    assertThat(messagePage.getContent().get(0).getMessageRoomId().intValue(),
+        is(savedMessageRoom2.getId().intValue()));
   }
 }

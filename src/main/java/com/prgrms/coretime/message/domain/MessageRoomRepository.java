@@ -17,7 +17,8 @@ public interface MessageRoomRepository extends JpaRepository<MessageRoom, Long> 
           + "OR (initial_receiver_id=:second_interlocutor_id AND initial_sender_id=:first_interlocutor_id)",
       nativeQuery = true)
   Optional<MessageRoom> findMessageRoomByInfo(@Param("created_from") Long createdFrom,
-      @Param("is_anonymous") Boolean isAnonymous, @Param("first_interlocutor_id") Long firstInterlocutorId,
+      @Param("is_anonymous") Boolean isAnonymous,
+      @Param("first_interlocutor_id") Long firstInterlocutorId,
       @Param("second_interlocutor_id") Long secondInterlocutorId);
 
   @Query(
@@ -27,7 +28,8 @@ public interface MessageRoomRepository extends JpaRepository<MessageRoom, Long> 
           + "OR (initial_receiver_id=:second_interlocutor_id AND initial_sender_id=:first_interlocutor_id)",
       nativeQuery = true)
   Optional<Long> findIdByInfo(@Param("created_from") Long createdFrom,
-      @Param("is_anonymous") Boolean isAnonymous, @Param("first_interlocutor_id") Long firstInterlocutorId,
+      @Param("is_anonymous") Boolean isAnonymous,
+      @Param("first_interlocutor_id") Long firstInterlocutorId,
       @Param("second_interlocutor_id") Long secondInterlocutorId);
 
   @Query(
@@ -37,7 +39,8 @@ public interface MessageRoomRepository extends JpaRepository<MessageRoom, Long> 
           + "OR (initial_receiver_id=:second_interlocutor_id AND initial_sender_id=:first_interlocutor_id))",
       nativeQuery = true)
   boolean existsByInfo(@Param("created_from") Long createdFrom,
-      @Param("is_anonymous") Boolean isAnonymous, @Param("first_interlocutor_id") Long firstInterlocutorId,
+      @Param("is_anonymous") Boolean isAnonymous,
+      @Param("first_interlocutor_id") Long firstInterlocutorId,
       @Param("second_interlocutor_id") Long secondInterlocutorId);
 
   @Query(
@@ -45,7 +48,7 @@ public interface MessageRoomRepository extends JpaRepository<MessageRoom, Long> 
       countQuery = "select count(m) from Message m where m.id=:id")
   Page<Message> findMessagesByMessageRoomId(@Param("id") Long messageRoomId, Pageable pageable);
 
-    @Query(
+  @Query(
       value =
           "select mr.message_room_id as messageRoomId, mr.is_anonymous as isAnonymous, mr.initial_receiver_id as initialReceiverId, mr.initial_sender_id as initialSenderId, m1.created_at as createdAt, m1.content as content "
               + "from message_room as mr "
@@ -68,5 +71,6 @@ public interface MessageRoomRepository extends JpaRepository<MessageRoom, Long> 
           + "and (visible_to='BOTH' "
           + "or (visible_to='ONLY_INITIAL_RECEIVER' and initial_receiver_id=:id) "
           + "or (visible_to='ONLY_INITIAL_SENDER' and initial_sender_id =:id))")
-  Page<MessageRoomsWithLastMessages> findMessageRoomsAndLastMessagesByUserId(@Param("id") Long userId, Pageable pageable);
+  Page<MessageRoomsWithLastMessages> findMessageRoomsAndLastMessagesByUserId(
+      @Param("id") Long userId, Pageable pageable);
 }

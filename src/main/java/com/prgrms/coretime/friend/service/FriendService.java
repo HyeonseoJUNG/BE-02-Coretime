@@ -1,8 +1,8 @@
 package com.prgrms.coretime.friend.service;
 
 import com.prgrms.coretime.common.ErrorCode;
-import com.prgrms.coretime.common.error.exception.DuplicateRequestException;
 import com.prgrms.coretime.common.error.exception.AlreadyExistsException;
+import com.prgrms.coretime.common.error.exception.DuplicateRequestException;
 import com.prgrms.coretime.common.error.exception.InvalidRequestException;
 import com.prgrms.coretime.common.error.exception.NotFoundException;
 import com.prgrms.coretime.friend.domain.Friend;

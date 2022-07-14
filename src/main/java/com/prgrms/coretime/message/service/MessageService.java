@@ -85,7 +85,7 @@ public class MessageService {
   }
 
   /**
-   *  삭제한 쪽지방인지 확인
+   * 삭제한 쪽지방인지 확인
    */
   private void checkMessageRoomIsDeleted(MessageRoom messageRoom, Long userId) {
     VisibilityState visibility = messageRoom.getVisibilityTo();
